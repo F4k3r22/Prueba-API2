@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat LMU</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2a1935; /* Morado oscuro */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+
+        .terms-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .terms-box h2 {
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .terms-box p, .terms-box ul {
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .terms-box button {
+            background: #6A5ACD; /* Azul pizarra medio */
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none !important;
+            transition: background 0.2s ease;
+        }
+
+        .terms-box button:hover {
+            background: #483D8B; /* Azul pizarra oscuro */
+        }
+
+        .chat {
+            width: 70%; /* Utiliza el 75% de la página */
+            height: 95vh; /* Ajusta la altura de la caja de chat según tus preferencias */
+            max-height: 600px; /* Ajusta la altura máxima de la caja de chat según tus preferencias */
+            background: #483D8B; /* Azul pizarra oscuro */
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .chat-title {
+            display: flex; /* Alinea los elementos en un contenedor flexible */
+            align-items: center; /* Centra verticalmente los elementos dentro del contenedor flexible */
+            background: #6A5ACD; /* Azul pizarra medio */
+            color: #fff;
+            text-transform: uppercase;
+            text-align: center; /* Centra el texto horizontalmente */
+            padding: 10px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+
+
+        .messages {
+            flex: 1;
+            color: #fff;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .message {
+            padding: 6px 10px 7px;
+            border-radius: 10px 10px 10px 0;
+            background: #8A2BE2; /* Azul violeta oscuro */
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-personal {
+            background: #9932CC; /* Púrpura oscuro */
+            border-radius: 10px 10px 0 10px;
+        }
+
+        .message-box {
+            background: #483D8B; /* Azul pizarra oscuro */
+            padding: 15px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .message-input {
+            background: none;
+            border: none;
+            outline: none !important;
+            resize: none;
+            color: #fff;
+            font-size: 14px;
+            height: 17px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .message-submit {
+            background: #6A5ACD; /* Azul pizarra medio */
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none !important;
+            transition: background 0.2s ease;
+        }
+
+        .message-submit:hover {
+            background: #483D8B; /* Azul pizarra oscuro */
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .about-link {
+            color: #6A5ACD; /* Azul pizarra medio */
+            text-decoration: none;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        
+        .about-link:hover {
+            color: #483D8B; /* Azul pizarra oscuro */
+        }
+
+        .logo {
+            width: 80px; /* Ajusta el ancho según sea necesario */
+            height: auto; /* Mantiene la proporción de la altura */
+            margin-right: 10px; /* Espaciado entre el logo y el título */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay">
+        <div class="terms-box">
+            <h2>Términos y Condiciones para usar Chat LMU</h2>
+            <p>Al usar Chat LMU, aceptas los términos y condiciones establecidos.</p>
+            <ul>
+                <li>El Chat LMU es una herramienta de generación de texto basada en inteligencia artificial. No nos hacemos responsables de las respuestas proporcionadas por el Chat LMU, ya que son generadas de manera automatizada y no reflejan necesariamente opiniones o información precisa.</li>
+                <li>Declaramos que no promovemos ni respaldamos ninguna información o contenido proporcionado por el Chat LMU. Las respuestas generadas son resultado de procesos automatizados y deben ser interpretadas con precaución.</li>
+                <li>Cada usuario es responsable de la interpretación y el uso de la información proporcionada por el Chat LMU. No asumimos responsabilidad por las acciones tomadas por los usuarios basadas en la información generada por el Chat LMU. Se insta a los usuarios a utilizar el servicio de manera ética y responsable.</li>
+                <li>Al utilizar Chat LMU, reconoces y aceptas estos términos y condiciones. Si no estás de acuerdo con alguno de estos términos, te instamos a que no utilices el servicio.</li>
+                <li>Nos reservamos el derecho de modificar, actualizar o cambiar estos términos y condiciones en cualquier momento. Las modificaciones entrarán en vigencia inmediatamente después de su publicación en esta página. Es responsabilidad del usuario revisar regularmente los términos y condiciones.</li>
+                <li>Nuestro servicio respeta la privacidad de los usuarios.</li>
+            </ul>
+            <button onclick="acceptTerms()">Aceptar</button>
+        </div>
+    </div>
+
+    <div class="chat">
+        <div class="chat-title">
+            <img src="{{ url_for('static', filename='Logo_chatlmu.png') }}" alt="Logo" class="logo">
+            <h1>Chat LMU Beta 1.0</h1>
+        </div>
+        <div class="messages">
+            {% if prompt %}
+                <div class="message message-personal">
+                    <p>{{ prompt }}</p>
+                </div>
+                <div class="message">
+                    <p>{{ generated_text }}</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="message-box">
+            <form action="/generate" method="post">
+                <textarea class="message-input" name="prompt" placeholder="Type message..."></textarea>
+                <button class="message-submit" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <a class="about-link" href="{{ url_for('about') }}">About Chat LMU</a>
+    <script>
+        // Mostrar la ventana emergente solo si no se ha aceptado previamente
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem("termsAccepted")) {
+                document.getElementById("overlay").style.display = "flex";
+            }
+        });
+
+        // Ocultar la ventana emergente al aceptar los términos
+        function acceptTerms() {
+            document.getElementById("overlay").style.display = "none";
+            // Almacenar en localStorage que se aceptaron los términos
+            localStorage.setItem("termsAccepted", "true");
+        }
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Tu código JavaScript para interactuar con la API
+        document.querySelector('form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const prompt = document.querySelector('.message-input').value;
+    
+            try {
+                // Llama a la API usando fetch
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'https://64fe-34-124-167-162.ngrok-free.app/',
+                    },
+                    body: new URLSearchParams({ 'prompt': prompt }),
+                });
+    
+                const result = await response.json();
+    
+                // Actualiza el contenido del frontend con la respuesta de la API
+                document.querySelector('.messages').innerHTML += `
+                    <div class="message message-personal">
+                        <p>${result.prompt}</p>
+                    </div>
+                    <div class="message">
+                        <p>${result.generated_text}</p>
+                    </div>
+                `;
+    
+                // Limpia el área de entrada después de enviar la solicitud
+                document.querySelector('.message-input').value = '';
+            } catch (error) {
+                console.error(error);
+                // Puedes manejar el error de alguna manera, por ejemplo, mostrar un mensaje al usuario
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>
